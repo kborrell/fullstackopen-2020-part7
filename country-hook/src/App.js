@@ -18,7 +18,27 @@ const useField = (type) => {
 const useCountry = (name) => {
   const [country, setCountry] = useState(null)
 
-  useEffect()
+  useEffect(() => {
+    const fetch = async () => {
+      var response = await axios.get(`https://restcountries.eu/rest/v2/name/${name}?fullText=true`)
+      var found = response.status === 200
+      var data = {}
+      if (found) {
+        var countryData = response.data[0]
+        data = {
+          name: countryData.name,
+          capital: countryData.capital,
+          population: countryData.population,
+          flag: countryData.flag
+        }
+      }
+      setCountry({ found, data });
+    }
+    
+    if (name) {
+      fetch()
+    }
+  }, [name])
 
   return country
 }
@@ -63,7 +83,7 @@ const App = () => {
         <button>find</button>
       </form>
 
-      <Country country={country} />
+    <Country country={country} />
     </div>
   )
 }
