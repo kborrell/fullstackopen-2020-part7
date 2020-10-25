@@ -1,8 +1,27 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
+import { useDispatch, useSelector } from 'react-redux'
+import { removeBlog, likeBlog } from '../reducers/blogReducer'
 
-const Blog = ({ blog, handleLike, handleRemove, own }) => {
+const Blog = ({ blog }) => {
   const [visible, setVisible] = useState(false)
+  const dispatch = useDispatch()
+  const blogs = useSelector(state => state.blogs)
+  const user = useSelector(state => state.user)
+  const own = user.username === blog.user.username
+
+  const handleLike = async (id) => {
+    const blogToLike = blogs.find(b => b.id === id)
+    dispatch(likeBlog(blogToLike))
+  }
+
+  const handleRemove = (id) => {
+    const blogToRemove = blogs.find(b => b.id === id)
+    const ok = window.confirm(`Remove blog ${blogToRemove.title} by ${blogToRemove.author}`)
+    if (ok) {
+      dispatch(removeBlog(blogToRemove))
+    }
+  }
 
   const blogStyle = {
     paddingTop: 10,
