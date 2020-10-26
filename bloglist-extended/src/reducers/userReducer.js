@@ -2,7 +2,6 @@ import loginService from '../services/login'
 import storage from '../utils/storage'
 
 const userReducer = (state = null, action) => {
-  console.log(action)
   switch(action.type) {
   case 'SET_USER':
     return action.data

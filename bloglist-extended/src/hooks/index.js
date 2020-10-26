@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { showNotification } from '../reducers/notificationReducer'
 
@@ -10,5 +11,24 @@ export const useNotification = () => {
 
   return {
     notifyWith
+  }
+}
+
+export const useField = (type) => {
+  const [value, setValue] = useState('')
+
+  const onChange = (event) => {
+    setValue(event.target.value)
+  }
+
+  const reset = () => {
+    setValue('')
+  }
+
+  return {
+    type,
+    value,
+    onChange,
+    reset
   }
 }

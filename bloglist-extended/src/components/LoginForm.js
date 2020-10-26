@@ -1,13 +1,13 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Notification from './Notification'
 
 import { useDispatch } from 'react-redux'
 import { loginUser } from '../reducers/userReducer'
-import { useNotification } from '../hooks'
+import { useNotification, useField } from '../hooks'
 
 const LoginForm = () => {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  var username = useField('text')
+  var password = useField('password')
 
   const dispatch = useDispatch()
   const notification = useNotification()
@@ -15,15 +15,18 @@ const LoginForm = () => {
   const handleLogin = async (event) => {
     event.preventDefault()
     try {
-      dispatch(loginUser(username, password)).then((loggedUser) => {
+      dispatch(loginUser(username.value, password.value)).then((loggedUser) => {
         notification.notifyWith(`${loggedUser.name} welcome back!`, 5000)
-        setUsername('')
-        setPassword('')
+        username.reset()
+        password.reset()
       })
     } catch(exception) {
       notification.notifyWith('wrong username/password', 5000, 'error')
     }
   }
+
+  // eslint-disable-next-line no-unused-vars
+  const getInputProps = ({ reset, ...props }) => props
 
   return (
     <div>
@@ -33,20 +36,10 @@ const LoginForm = () => {
 
       <form onSubmit={handleLogin}>
         <div>
-            username
-          <input
-            id='username'
-            value={username}
-            onChange={({ target }) => setUsername(target.value)}
-          />
+            username <input id='username' {...getInputProps(username)} />
         </div>
         <div>
-            password
-          <input
-            id='password'
-            value={password}
-            onChange={({ target }) => setPassword(target.value)}
-          />
+            password <input id='password' {...getInputProps(password)} />
         </div>
         <button id='login'>login</button>
       </form>

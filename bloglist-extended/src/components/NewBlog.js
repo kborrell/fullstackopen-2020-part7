@@ -1,11 +1,12 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useDispatch } from 'react-redux'
 import { createBlog } from '../reducers/blogReducer'
+import { useField } from '../hooks'
 
 const NewBlog = () => {
-  const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
-  const [url, setUrl] = useState('')
+  const title = useField('text')
+  const author = useField('text')
+  const url = useField('text')
 
   const dispatch = useDispatch()
 
@@ -13,13 +14,18 @@ const NewBlog = () => {
     event.preventDefault()
 
     dispatch(createBlog({
-      title, author, url
+      title: title.value,
+      author: author.value,
+      url: url.value
     }))
 
-    setTitle('')
-    setAuthor('')
-    setUrl('')
+    title.reset()
+    author.reset()
+    url.reset()
   }
+
+  // eslint-disable-next-line no-unused-vars
+  const getInputProps = ({ reset, ...props }) => props
 
   return (
     <div>
@@ -29,24 +35,21 @@ const NewBlog = () => {
           author
           <input
             id='author'
-            value={author}
-            onChange={({ target }) => setAuthor(target.value)}
+            {...getInputProps(author)}
           />
         </div>
         <div>
           title
           <input
             id='title'
-            value={title}
-            onChange={({ target }) => setTitle(target.value)}
+            {...getInputProps(title)}
           />
         </div>
         <div>
           url
           <input
             id='url'
-            value={url}
-            onChange={({ target }) => setUrl(target.value)}
+            {...getInputProps(url)}
           />
         </div>
         <button id="create">create</button>
