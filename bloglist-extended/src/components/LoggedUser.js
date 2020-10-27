@@ -10,12 +10,14 @@ const LoggedUser = () => {
     dispatch(logoutUser())
   }
 
+  const padding = {
+    padding: 5
+  }
+
   return (
-    <div>
-      <p>
-        {user.name} logged in <button onClick={handleLogout}>logout</button>
-      </p>
-    </div>
+    <span style={ padding }>
+      {user.name} logged in <button onClick={handleLogout}>logout</button>
+    </span>
   )
 }
 
