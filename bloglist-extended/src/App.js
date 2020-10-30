@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { initializeBlogs } from './reducers/blogReducer'
 import { loadUser } from './reducers/userReducer'
 import { Switch, Route, useRouteMatch, Link } from 'react-router-dom'
+import { Navbar, Nav } from 'react-bootstrap'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -28,26 +29,27 @@ const App = () => {
     : null
 
   if ( !user ) {
-    return <LoginForm />
-  }
-
-  const padding = {
-    padding: 5,
-    display: 'inline-block'
-  }
-
-  const navBar = {
-    'background-color': 'Gainsboro',
+    return <div className='container'><LoginForm /></div>
   }
 
   return (
-    <div>
-      <div style={ navBar }>
-        <Link style={ padding } to='/'>blogs</Link>
-        <Link style={ padding } to='/users'>users</Link>
-        <LoggedUser style={ padding } />
-      </div>
-      <h2>blogs</h2>
+    <div className='container'>
+      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse id="responsive-navbar-nav">
+          <Nav className="mr-auto">
+            <Nav.Link href="#" as="span">
+              <Link className='text-white' to='/'>blogs</Link>
+            </Nav.Link>
+            <Nav.Link href="#" as="span">
+              <Link className='text-white' to='/users'>users</Link>
+            </Nav.Link>
+            <Nav.Link href="#" as="span">
+              <LoggedUser />
+            </Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
 
       <Notification />
 

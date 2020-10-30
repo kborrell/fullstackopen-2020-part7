@@ -20,6 +20,7 @@ const LoginForm = () => {
         username.reset()
         password.reset()
       })
+        .catch(() => notification.notifyWith('wrong username/password', 5000, 'error'))
     } catch(exception) {
       notification.notifyWith('wrong username/password', 5000, 'error')
     }

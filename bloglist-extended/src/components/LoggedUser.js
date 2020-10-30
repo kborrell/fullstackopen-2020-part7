@@ -1,6 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { logoutUser } from '../reducers/userReducer'
+import { Button } from 'react-bootstrap'
 
 const LoggedUser = () => {
   const dispatch = useDispatch()
@@ -10,13 +11,9 @@ const LoggedUser = () => {
     dispatch(logoutUser())
   }
 
-  const padding = {
-    padding: 5
-  }
-
   return (
-    <span style={ padding }>
-      {user.name} logged in <button onClick={handleLogout}>logout</button>
+    <span>
+      {user.name} logged in <Button className='btn-light btn-sm' onClick={handleLogout}>logout</Button>
     </span>
   )
 }

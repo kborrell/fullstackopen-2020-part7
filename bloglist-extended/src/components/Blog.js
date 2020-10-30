@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import { removeBlog, likeBlog } from '../reducers/blogReducer'
+import Comments from './Comments'
+import { Button } from 'react-bootstrap'
 
 const Blog = ({ blog }) => {
   const dispatch = useDispatch()
@@ -24,14 +26,15 @@ const Blog = ({ blog }) => {
 
   if (blog) {
     return (
-      <div>
-        <h2>{blog.title}</h2>
-        <div><a href={blog.url}>{blog.url}</a></div>
-        <div>likes {blog.likes}
-          <button onClick={() => handleLike(blog.id)}>like</button>
+      <div className='mt-5'>
+        <h3>{blog.title} <small className='text-muted'>{blog.author}</small></h3>
+        <div className='blockquote'><a href={blog.url}>{blog.url}</a></div>
+        <div><strong>likes {blog.likes}</strong>
+          <Button className='btn-success btn-sm ml-2' onClick={() => handleLike(blog.id)}>like</Button>
         </div>
-        <div>added by {blog.user.name}</div>
-        {own&&<button onClick={() => handleRemove(blog.id)}>remove</button>}
+        <div className='text-secondary'>added by {blog.user.name}</div>
+        <Comments blog={ blog } />
+        {own&&<Button className='btn-danger' onClick={() => handleRemove(blog.id)}>remove</Button>}
       </div>
     )
   }

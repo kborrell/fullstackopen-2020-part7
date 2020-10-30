@@ -17,9 +17,9 @@ const UserInfo = () => {
   if (userViewed)
   {
     return (
-      <div>
-        <h2>{userViewed.name}</h2>
-        <b>added blogs</b>
+      <div className='mt-4'>
+        <h3 className='display-4'>{userViewed.name}</h3>
+        <h5>Added blogs</h5>
         <ul>
           {userViewed.blogs.map(blog => (
             <li key={blog.id}>{blog.title}</li>

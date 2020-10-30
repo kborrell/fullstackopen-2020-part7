@@ -20,12 +20,16 @@ const Blogs = () => {
 
   return (
     <div>
-      <Togglable buttonLabel='create new blog'  ref={blogFormRef}>
-        <NewBlog />
-      </Togglable>
+      <h2>Blogs</h2>
+
+      <div className='mb-3'>
+        <Togglable buttonLabel='create new blog'  ref={blogFormRef}>
+          <NewBlog />
+        </Togglable>
+      </div>
 
       {blogs.sort(byLikes).map(blog =>
-        <div key={blog.id} className='blog' style={blogStyle}>
+        <div key={blog.id} className='blog pb-2' style={blogStyle}>
           <Link to={`/blogs/${blog.id}`}>{blog.title}</Link>
         </div>
       )}
